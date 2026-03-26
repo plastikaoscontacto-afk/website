@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tienda PRO</title>
+  <title>Tienda PRO Responsive</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -15,6 +15,8 @@
       --gray: #666;
     }
 
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -25,13 +27,18 @@
     header {
       display: flex;
       justify-content: space-between;
-      padding: 15px 30px;
+      align-items: center;
+      padding: 15px 20px;
       border-bottom: 1px solid #eee;
       position: sticky;
       top: 0;
       background: white;
       z-index: 1000;
+      flex-wrap: wrap;
+      gap: 10px;
     }
+
+    header h2 { margin: 0; font-size: 18px; }
 
     .cart-btn {
       background: var(--primary);
@@ -42,26 +49,50 @@
       cursor: pointer;
     }
 
-    .carousel { height: 60vh; overflow: hidden; }
-    .slides { display: flex; transition: 0.5s; }
-    .slide { min-width: 100%; background-size: cover; background-position: center; }
+    /* Carrusel */
+    .carousel {
+      width: 100%;
+      overflow: hidden;
+      height: 60vh;
+      min-height: 250px;
+    }
 
+    .slides {
+      display: flex;
+      transition: 0.5s;
+      height: 100%;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Productos */
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
-      padding: 40px;
+      padding: 20px;
     }
 
     .card {
       border: 1px solid #eee;
       border-radius: 20px;
-      padding: 20px;
+      padding: 15px;
       text-align: center;
       transition: 0.3s;
     }
 
     .card:hover { transform: scale(1.03); }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
 
     .btn {
       background: var(--primary);
@@ -71,18 +102,22 @@
       border-radius: 20px;
       cursor: pointer;
       margin-top: 10px;
+      width: 100%;
     }
 
+    /* Carrito */
     .cart {
       position: fixed;
-      right: -400px;
+      right: -100%;
       top: 0;
-      width: 350px;
+      width: 100%;
+      max-width: 350px;
       height: 100%;
       background: white;
       box-shadow: -5px 0 20px rgba(0,0,0,0.1);
       padding: 20px;
       transition: 0.3s;
+      overflow-y: auto;
     }
 
     .cart.active { right: 0; }
@@ -91,6 +126,7 @@
       display: flex;
       justify-content: space-between;
       margin: 10px 0;
+      font-size: 14px;
     }
 
     .total {
@@ -103,7 +139,50 @@
       margin-top: 10px;
     }
 
-    footer { text-align: center; padding: 20px; color: var(--gray); }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--gray);
+      font-size: 14px;
+    }
+
+    /* 📱 RESPONSIVE */
+    @media (max-width: 768px) {
+      header h2 { font-size: 16px; }
+
+      .carousel {
+        height: 40vh;
+      }
+
+      .products {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        padding: 15px;
+      }
+
+      .card {
+        padding: 10px;
+      }
+
+      .btn {
+        font-size: 14px;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .carousel {
+        height: 30vh;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cart-btn {
+        align-self: flex-end;
+      }
+    }
   </style>
 </head>
 <body>
@@ -149,7 +228,7 @@ const countEl = document.getElementById("count");
 products.forEach(p=>{
   container.innerHTML += `
   <div class="card">
-    <img src="${p.img}" width="100%">
+    <img src="${p.img}">
     <h3>${p.name}</h3>
     <p>$${p.price}</p>
     <button class="btn" onclick="add(${p.id})">Agregar</button>
