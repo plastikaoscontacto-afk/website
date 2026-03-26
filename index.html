@@ -3,20 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tienda Moderna</title>
+  <title>Tienda PRO</title>
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #ffffff;
+      --primary: #0071e3;
+      --bg: #fff;
       --text: #111;
       --gray: #666;
-      --primary: #0071e3;
     }
-
-    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -28,7 +25,6 @@
     header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       padding: 15px 30px;
       border-bottom: 1px solid #eee;
       position: sticky;
@@ -37,47 +33,19 @@
       z-index: 1000;
     }
 
-    header h1 {
-      font-size: 18px;
-      margin: 0;
-    }
-
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-    }
-
     .cart-btn {
-      cursor: pointer;
       background: var(--primary);
       color: white;
       border: none;
-      padding: 8px 12px;
+      padding: 8px 15px;
       border-radius: 20px;
+      cursor: pointer;
     }
 
-    /* Carrusel */
-    .carousel {
-      position: relative;
-      overflow: hidden;
-      height: 60vh;
-    }
+    .carousel { height: 60vh; overflow: hidden; }
+    .slides { display: flex; transition: 0.5s; }
+    .slide { min-width: 100%; background-size: cover; background-position: center; }
 
-    .slides {
-      display: flex;
-      transition: transform 0.5s ease;
-    }
-
-    .slide {
-      min-width: 100%;
-      height: 60vh;
-      background-size: cover;
-      background-position: center;
-    }
-
-    /* Productos */
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -93,140 +61,142 @@
       transition: 0.3s;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 15px;
-    }
-
-    .card h3 { margin: 10px 0 5px; }
-
-    .card p { color: var(--gray); }
+    .card:hover { transform: scale(1.03); }
 
     .btn {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 10px;
       border-radius: 20px;
       cursor: pointer;
+      margin-top: 10px;
     }
 
-    /* Carrito */
     .cart {
       position: fixed;
       right: -400px;
       top: 0;
-      width: 300px;
+      width: 350px;
       height: 100%;
       background: white;
       box-shadow: -5px 0 20px rgba(0,0,0,0.1);
       padding: 20px;
       transition: 0.3s;
-      z-index: 2000;
     }
 
     .cart.active { right: 0; }
 
-    .cart h2 { margin-top: 0; }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: var(--gray);
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
     }
+
+    .total {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .checkout {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    footer { text-align: center; padding: 20px; color: var(--gray); }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Mi Tienda</h1>
-  <nav>
-    <a href="#">Inicio</a>
-    <a href="#">Productos</a>
-  </nav>
-  <button class="cart-btn" onclick="toggleCart()">🛒 (<span id="cart-count">0</span>)</button>
+  <h2>Mi Tienda PRO</h2>
+  <button class="cart-btn" onclick="toggleCart()">🛒 (<span id="count">0</span>)</button>
 </header>
 
-<!-- Carrusel -->
 <div class="carousel">
   <div class="slides" id="slides">
-    <div class="slide" style="background-image: url('https://picsum.photos/1200/600?1');"></div>
-    <div class="slide" style="background-image: url('https://picsum.photos/1200/600?2');"></div>
-    <div class="slide" style="background-image: url('https://picsum.photos/1200/600?3');"></div>
+    <div class="slide" style="background-image:url('https://picsum.photos/1200/600?1')"></div>
+    <div class="slide" style="background-image:url('https://picsum.photos/1200/600?2')"></div>
+    <div class="slide" style="background-image:url('https://picsum.photos/1200/600?3')"></div>
   </div>
 </div>
 
-<!-- Productos -->
-<section class="products" id="products">
-</section>
+<section class="products" id="products"></section>
 
-<!-- Carrito -->
 <div class="cart" id="cart">
   <h2>Carrito</h2>
-  <ul id="cart-items"></ul>
+  <div id="cart-items"></div>
+  <div class="total">Total: $<span id="total">0</span></div>
+  <button class="btn checkout" onclick="checkout()">Pagar</button>
 </div>
 
-<footer>
-  <p>© 2026 Tienda Moderna</p>
-</footer>
+<footer>© 2026 Tienda PRO</footer>
 
 <script>
-  // Productos base
-  const products = [
-    { id: 1, name: "Producto 1", price: 100, img: "https://picsum.photos/300?1" },
-    { id: 2, name: "Producto 2", price: 200, img: "https://picsum.photos/300?2" },
-    { id: 3, name: "Producto 3", price: 300, img: "https://picsum.photos/300?3" }
-  ];
+const products = [
+  {id:1,name:"Audífonos",price:500,img:"https://picsum.photos/300?1"},
+  {id:2,name:"Smartwatch",price:1200,img:"https://picsum.photos/300?2"},
+  {id:3,name:"Laptop",price:15000,img:"https://picsum.photos/300?3"}
+];
 
-  const cart = [];
+let cart = [];
 
-  const productContainer = document.getElementById("products");
-  const cartItems = document.getElementById("cart-items");
-  const cartCount = document.getElementById("cart-count");
+const container = document.getElementById("products");
+const cartItems = document.getElementById("cart-items");
+const totalEl = document.getElementById("total");
+const countEl = document.getElementById("count");
 
-  // Render productos
-  products.forEach(p => {
-    productContainer.innerHTML += `
-      <div class="card">
-        <img src="${p.img}" alt="${p.name}">
-        <h3>${p.name}</h3>
-        <p>$${p.price}</p>
-        <button class="btn" onclick="addToCart(${p.id})">Agregar</button>
-      </div>
-    `;
+products.forEach(p=>{
+  container.innerHTML += `
+  <div class="card">
+    <img src="${p.img}" width="100%">
+    <h3>${p.name}</h3>
+    <p>$${p.price}</p>
+    <button class="btn" onclick="add(${p.id})">Agregar</button>
+  </div>`;
+});
+
+function add(id){
+  const product = products.find(p=>p.id===id);
+  cart.push(product);
+  renderCart();
+}
+
+function remove(index){
+  cart.splice(index,1);
+  renderCart();
+}
+
+function renderCart(){
+  cartItems.innerHTML="";
+  let total=0;
+
+  cart.forEach((item,i)=>{
+    total+=item.price;
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        ${item.name} - $${item.price}
+        <button onclick="remove(${i})">❌</button>
+      </div>`;
   });
 
-  function addToCart(id) {
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    updateCart();
-  }
+  totalEl.textContent=total;
+  countEl.textContent=cart.length;
+}
 
-  function updateCart() {
-    cartItems.innerHTML = "";
-    cart.forEach(item => {
-      cartItems.innerHTML += `<li>${item.name} - $${item.price}</li>`;
-    });
-    cartCount.textContent = cart.length;
-  }
+function toggleCart(){
+  document.getElementById("cart").classList.toggle("active");
+}
 
-  function toggleCart() {
-    document.getElementById("cart").classList.toggle("active");
-  }
+function checkout(){
+  alert("Pago simulado 💳\nTotal: $"+totalEl.textContent);
+}
 
-  // Carrusel automático
-  let index = 0;
-  const slides = document.getElementById("slides");
-
-  setInterval(() => {
-    index = (index + 1) % 3;
-    slides.style.transform = `translateX(-${index * 100}%)`;
-  }, 5000);
+let i=0;
+setInterval(()=>{
+  i=(i+1)%3;
+  document.getElementById("slides").style.transform=`translateX(-${i*100}%)`;
+},5000);
 </script>
 
 </body>
