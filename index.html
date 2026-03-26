@@ -1,271 +1,125 @@
-<!DOCTYPE html> <!-- Define que el documento es HTML5 -->
-<html lang="es"> <!-- Idioma español -->
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8" /> <!-- Codificación de caracteres -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Responsive en móviles -->
-  <title>Tienda PRO Responsive</title> <!-- Título de la pestaña -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda PRO avanzada</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Fuente moderna -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --primary: #0071e3; /* Color principal */
-      --bg: #fff; /* Fondo */
-      --text: #111; /* Texto principal */
-      --gray: #666; /* Texto secundario */
-    }
-
-    * { box-sizing: border-box; } /* Mejora cálculos de tamaños */
-
-    body {
-      margin: 0; /* Quita márgenes */
-      font-family: 'Inter', sans-serif; /* Fuente */
-      background: var(--bg); /* Color de fondo */
-      color: var(--text); /* Color de texto */
-    }
-
-    header {
-      display: flex; /* Layout horizontal */
-      justify-content: space-between; /* Separación */
-      align-items: center; /* Centrado vertical */
-      padding: 15px 20px; /* Espaciado */
-      border-bottom: 1px solid #eee; /* Línea inferior */
-      position: sticky; /* Fijo arriba */
-      top: 0;
-      background: white;
-      z-index: 1000;
-      flex-wrap: wrap; /* Permite salto en móvil */
-      gap: 10px;
-    }
-
-    header h2 { margin: 0; font-size: 18px; } /* Estilo del título */
-
-    .cart-btn {
-      background: var(--primary); /* Color botón */
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 20px; /* Bordes redondeados */
-      cursor: pointer;
-    }
-
-    /* Carrusel */
-    .carousel {
-      width: 100%;
-      overflow: hidden; /* Oculta desbordes */
-      height: 60vh; /* Altura relativa */
-      min-height: 250px;
-    }
-
-    .slides {
-      display: flex; /* Slides en fila */
-      transition: 0.5s; /* Animación */
-      height: 100%;
-    }
-
-    .slide {
-      min-width: 100%; /* Cada slide ocupa toda la pantalla */
-      height: 100%;
-      background-size: cover; /* Ajusta imagen */
-      background-position: center;
-    }
-
-    /* Productos */
-    .products {
-      display: grid; /* Grid layout */
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Adaptativo */
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .card {
-      border: 1px solid #eee;
-      border-radius: 20px;
-      padding: 15px;
-      text-align: center;
-      transition: 0.3s; /* Animación */
-    }
-
-    .card:hover { transform: scale(1.03); } /* Efecto hover */
-
-    .card img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-
-    .btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 20px;
-      cursor: pointer;
-      margin-top: 10px;
-      width: 100%; /* Botón ocupa todo */
-    }
-
-    /* Carrito */
-    .cart {
-      position: fixed; /* Posición fija */
-      right: -100%; /* Oculto */
-      top: 0;
-      width: 100%;
-      max-width: 350px;
-      height: 100%;
-      background: white;
-      box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-      padding: 20px;
-      transition: 0.3s;
-      overflow-y: auto; /* Scroll */
-    }
-
-    .cart.active { right: 0; } /* Mostrar carrito */
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-      font-size: 14px;
-    }
-
-    .total {
-      font-weight: bold;
-      margin-top: 20px;
-    }
-
-    .checkout {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: var(--gray);
-      font-size: 14px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .carousel { height: 40vh; } /* Reduce altura */
-      .products { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
-    }
-
-    @media (max-width: 480px) {
-      .carousel { height: 30vh; }
-      header { flex-direction: column; align-items: flex-start; }
-      .cart-btn { align-self: flex-end; }
-    }
-  </style>
+<style>
+body{margin:0;font-family:'Inter',sans-serif;background:#f5f5f5}
+header{display:flex;align-items:center;gap:10px;padding:15px;background:white}
+.search input{padding:10px;border-radius:20px;border:1px solid #ccc;width:100%}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px}
+.card{background:white;border-radius:15px;padding:15px;text-align:center;transition:.3s}
+.card:hover{transform:scale(1.03)}
+.btn{background:#0071e3;color:#fff;border:none;padding:10px;border-radius:20px;cursor:pointer;margin-top:5px;width:100%}
+.favorite{cursor:pointer;font-size:20px}
+.cart{position:fixed;right:-350px;top:0;width:300px;height:100%;background:white;padding:20px;transition:.3s}
+.cart.active{right:0}
+.product-page{display:none;padding:20px}
+.zoom:hover{transform:scale(1.2);transition:.3s}
+</style>
 </head>
 <body>
 
 <header>
-  <h2>PlastiKaoS</h2> <!-- Nombre tienda -->
-  <button class="cart-btn" onclick="toggleCart()">🛒 (<span id="count">0</span>)</button> <!-- Botón carrito -->
+<h2>Tienda PRO</h2>
+<div class="search"><input type="text" placeholder="Buscar..." onkeyup="searchProduct(this.value)"></div>
+<button onclick="toggleCart()">🛒</button>
 </header>
 
-<!-- Carrusel -->
-<div class="carousel">
-  <div class="slides" id="slides">
-    <div class="slide" style="background-image:url('https://picsum.photos/1200/600?1')"></div>
-    <div class="slide" style="background-image:url('https://picsum.photos/1200/600?2')"></div>
-    <div class="slide" style="background-image:url('https://picsum.photos/1200/600?3')"></div>
-  </div>
-</div>
-
-<!-- Productos -->
 <section class="products" id="products"></section>
 
-<!-- Carrito -->
 <div class="cart" id="cart">
-  <h2>Carrito</h2>
-  <div id="cart-items"></div>
-  <div class="total">Total: $<span id="total">0</span></div>
-  <button class="btn checkout" onclick="checkout()">Pagar</button>
+<h3>Carrito</h3>
+<div id="cart-items"></div>
 </div>
 
-<footer>© 2026 PlastiKaoS</footer>
+<div class="product-page" id="product-page">
+<button onclick="goBack()">← Volver</button>
+<img id="p-main" class="zoom" width="300">
+<h2 id="p-name"></h2>
+<p id="p-price"></p>
+<p id="p-desc"></p>
+<div id="rating"></div>
+<button class="btn" id="buy-btn">Comprar</button>
+</div>
 
 <script>
-// Lista de productos
-const products = [
-  {id:1,name:"Audífonos",price:500,img:"https://picsum.photos/300?1", link:"LINK DE PAGO AQUI"},
-  {id:2,name:"Smartwatch",price:1200,img:"https://picsum.photos/300?2", link:"LINK DE PAGO AQUI"},
-  {id:3,name:"Laptop",price:15000,img:"https://picsum.photos/300?3", link:"LINK DE PAGO AQUI"}
+const products=[
+{id:1,name:"Audífonos",price:500,desc:"Alta calidad",rating:4,images:["https://picsum.photos/400?1"],link:"LINK DE PAGO AQUI"},
+{id:2,name:"Smartwatch",price:1200,desc:"Tecnología",rating:5,images:["https://picsum.photos/400?2"],link:"LINK DE PAGO AQUI"}
 ];
 
-let cart = []; // Carrito vacío
+let cart=[];
+let favorites=[];
 
-// Referencias HTML
-const container = document.getElementById("products");
-const cartItems = document.getElementById("cart-items");
-const totalEl = document.getElementById("total");
-const countEl = document.getElementById("count");
-
-// Mostrar productos
-products.forEach(p=>{
-  container.innerHTML += `
-  <div class="card">
-    <img src="${p.img}">
-    <h3>${p.name}</h3>
-    <p>$${p.price}</p>
-    <button class="btn" onclick="add(${p.id})">Agregar</button>
-    <a href="${p.link}" target="_blank">
-      <button class="btn">Comprar ahora</button>
-    </a>
-  </div>`;
+function render(list){
+const c=document.getElementById("products");
+c.innerHTML="";
+list.forEach(p=>{
+c.innerHTML+=`
+<div class="card">
+<div class="favorite" onclick="toggleFav(${p.id})">❤️</div>
+<img src="${p.images[0]}">
+<h3>${p.name}</h3>
+<p>$${p.price}</p>
+<p>${"⭐".repeat(p.rating)}</p>
+<button class="btn" onclick="viewProduct(${p.id})">Ver</button>
+<button class="btn" onclick="add(${p.id})">Agregar</button>
+</div>`;
 });
+}
 
-// Agregar al carrito
+render(products);
+
+function toggleFav(id){
+if(favorites.includes(id)){
+favorites=favorites.filter(f=>f!==id);
+}else{favorites.push(id)}
+alert("Favoritos: "+favorites.length);
+}
+
+function searchProduct(text){
+render(products.filter(p=>p.name.toLowerCase().includes(text.toLowerCase())));
+}
+
+function viewProduct(id){
+const p=products.find(x=>x.id===id);
+document.getElementById("products").style.display="none";
+document.getElementById("product-page").style.display="block";
+
+pMain=document.getElementById("p-main");
+pMain.src=p.images[0];
+document.getElementById("p-name").textContent=p.name;
+document.getElementById("p-price").textContent="$"+p.price;
+document.getElementById("p-desc").textContent=p.desc;
+document.getElementById("rating").textContent="⭐".repeat(p.rating);
+document.getElementById("buy-btn").onclick=()=>window.open(p.link);
+}
+
+function goBack(){
+document.getElementById("product-page").style.display="none";
+document.getElementById("products").style.display="grid";
+}
+
 function add(id){
-  const product = products.find(p=>p.id===id);
-  cart.push(product);
-  renderCart();
+cart.push(products.find(p=>p.id===id));
+renderCart();
 }
 
-// Eliminar producto
-function remove(index){
-  cart.splice(index,1);
-  renderCart();
-}
-
-// Actualizar carrito
 function renderCart(){
-  cartItems.innerHTML="";
-  let total=0;
-
-  cart.forEach((item,i)=>{
-    total+=item.price;
-    cartItems.innerHTML += `
-      <div class="cart-item">
-        ${item.name} - $${item.price}
-        <button onclick="remove(${i})">❌</button>
-      </div>`;
-  });
-
-  totalEl.textContent=total;
-  countEl.textContent=cart.length;
+const c=document.getElementById("cart-items");
+c.innerHTML="";
+cart.forEach(i=>{
+c.innerHTML+=`<p>${i.name} - $${i.price}</p>`;
+});
 }
 
-// Mostrar carrito
 function toggleCart(){
-  document.getElementById("cart").classList.toggle("active");
+document.getElementById("cart").classList.toggle("active");
 }
-
-// Checkout
-function checkout(){
-  alert("Usa los botones de compra directa 💳");
-}
-
-// Carrusel automático
-let i=0;
-setInterval(()=>{
-  i=(i+1)%3;
-  document.getElementById("slides").style.transform=`translateX(-${i*100}%)`;
-},5000);
 </script>
 
 </body>
